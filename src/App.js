@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bulma/css/bulma.css';
-import './App.css';
+import Header from './components/Header';
+import Home from './components/Home';
 
 
 class App extends Component {
@@ -48,47 +49,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <section className="hero is-medium is-dark is-bold">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                Star Wars API - swapi
-              </h1>
-              <h2 className="subtitle">
-                May the force be with you!
-              </h2>
-            </div>
-          </div>
-        </section>
-        <section className='section'>
-          <div className='container'>
-            <div className='columns is-multiline'>
-
-              {
-                this.state.swpeople.map((person, idx) => {
-                  return (
-                    <div key={person.name} className='column is-3'>
-                      <div className="card">
-                        <header className="card-header">
-                          <p className="card-header-title">
-                            {person.name}
-                          </p>
-                        </header>
-                        <div className="card-content">
-                          <div className="content">
-                            {this.getFilmsByPerson(person.films)}
-                            <br />
-                            <time>YOB: {person.birth_year}</time>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })
-              }
-            </div>
-          </div>
-        </section>
+        <Header />
+        <Home swpeople={this.state.swpeople} getFilmsByPerson={this.getFilmsByPerson} />
       </div>
     );
   }
