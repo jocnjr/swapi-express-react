@@ -1,26 +1,26 @@
 import React from 'react';
 
-const Vehicles = ({ swvehicles, getFilmsByVehicle }) => {
+const Species = ({ swspecies, getFilmsBySpecie }) => {
   return (
     <section className='section'>
       <div className='container'>
         <div className='columns is-multiline'>
 
           {
-            swvehicles.map((vehicle, idx) => {
+            swspecies.map((specie, idx) => {
               return (
-                <div key={vehicle.name} className='column is-3'>
+                <div key={specie.name} className='column is-3'>
                   <div className="card">
                     <header className="card-header">
                       <p className="card-header-title">
-                        {vehicle.name}
+                        {specie.name}
                       </p>
                     </header>
                     <div className="card-content">
                       <div className="content">
-                        {getFilmsByVehicle(vehicle.films)}
+                        {getFilmsBySpecie(specie.films)}
                         <br />
-                        <time>Class: {vehicle.vehicle_class}</time>
+                        <time>Class: {specie.classification}</time>
                       </div>
                     </div>
                   </div>
@@ -34,5 +34,5 @@ const Vehicles = ({ swvehicles, getFilmsByVehicle }) => {
   )
 }
 
-export default Vehicles;
+export default Species;
 
