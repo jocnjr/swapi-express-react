@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Planets from './components/Planets';
 import Vehicles from './components/Vehicles';
 import Species from './components/Species';
+import Modal from './components/Modal';
 import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
@@ -17,7 +18,9 @@ class App extends Component {
       swfilms: [],
       swplanets: [],
       swspecies: [],
-      swvehicles: []
+      swvehicles: [],
+      isModalActive: false,
+      modalClass: 'modal',
     }
   }
 
@@ -108,15 +111,37 @@ class App extends Component {
     })
   }
 
+  getPeople = (idx, location) => {
+    console.log(location)
+    return this.state.swpeople[idx];
+  }
+
+  
+  toggleModal = () => {
+    (this.state.isModalActive) ? (
+      this.setState({
+        isModalActive: !this.state.isModalActive,
+        modalClass: 'modal'
+      })
+    ) : (
+      this.setState({
+        isModalActive: !this.state.isModalActive,
+        modalClass: 'modal is-active'
+      })
+    )
+
+  }
+
   render() {
     return (
       <div>
         <Header />
         <Switch>
-          <Route exact path='/' render={() => <Home swpeople={this.state.swpeople} getFilmsByPerson={this.getFilmsByPerson} />} />
-          <Route path='/planets' render={() => <Planets swplanets={this.state.swplanets} getFilmsByPlanet={this.getFilmsByPlanet} /> } />
+          <Route exact path='/' render={() => <Home swpeople={this.state.swpeople} toggleModal={this.toggleModal} getFilmsByPerson={this.getFilmsByPerson} />} />
+          <Route path='/planets' render={() => <Planets swplanets={this.state.swplanets} toggleModal={this.toggleModal} getFilmsByPlanet={this.getFilmsByPlanet} /> } />
           <Route path='/species' render={() => <Species swspecies={this.state.swspecies} getFilmsBySpecie={this.getFilmsBySpecie} /> } />
           <Route path='/vehicles' render={() => <Vehicles swvehicles={this.state.swvehicles} getFilmsByVehicle={this.getFilmsByVehicle} /> } />
+          <Route exact path="/modal/:id" render={(props) => <Modal getPeople={this.getPeople} toggleModal={this.toggleModal} {...this.state} {...props}/>} />
         </Switch>
       </div>
     );

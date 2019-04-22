@@ -6,7 +6,7 @@ const NavBar = () => {
   return (
     <nav className="navbar is-white" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
+        <a className="navbar-item" href="https://swapi.co">
           <img src={swLogo} alt='Star Wars React Project'/>
         </a>
       </div>

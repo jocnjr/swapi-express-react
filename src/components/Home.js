@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Home = ({ swpeople, getFilmsByPerson }) => {
+
+const Home = ({ swpeople, getFilmsByPerson, toggleModal }) => {
   return (
     <section className='section'>
       <div className='container'>
@@ -13,7 +15,7 @@ const Home = ({ swpeople, getFilmsByPerson }) => {
                   <div className="card">
                     <header className="card-header">
                       <p className="card-header-title">
-                        {person.name}
+                        <Link onClick={toggleModal} to={`/modal/${idx}`}>{person.name}</Link>
                       </p>
                     </header>
                     <div className="card-content">
