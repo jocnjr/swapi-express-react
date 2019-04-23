@@ -15,7 +15,7 @@ const Home = ({ swpeople, getFilmsByPerson, toggleModal }) => {
                   <div className="card">
                     <header className="card-header">
                       <p className="card-header-title">
-                        <Link onClick={toggleModal} to={`/modal/${idx}`}>{person.name}</Link>
+                        <Link onClick={toggleModal} to={`/people/${idx}`}>{person.name}</Link>
                       </p>
                     </header>
                     <div className="card-content">

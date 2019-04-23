@@ -7,7 +7,7 @@ import Planets from './components/Planets';
 import Vehicles from './components/Vehicles';
 import Species from './components/Species';
 import Modal from './components/Modal';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -18,9 +18,7 @@ class App extends Component {
       swfilms: [],
       swplanets: [],
       swspecies: [],
-      swvehicles: [],
-      isModalActive: false,
-      modalClass: 'modal',
+      swvehicles: []
     }
   }
 
@@ -111,25 +109,11 @@ class App extends Component {
     })
   }
 
-  getPeople = (idx, location) => {
-    console.log(location)
-    return this.state.swpeople[idx];
-  }
-
-  
-  toggleModal = () => {
-    (this.state.isModalActive) ? (
-      this.setState({
-        isModalActive: !this.state.isModalActive,
-        modalClass: 'modal'
-      })
-    ) : (
-      this.setState({
-        isModalActive: !this.state.isModalActive,
-        modalClass: 'modal is-active'
-      })
-    )
-
+  getDetail = (idx, pathname) => {
+    let appSection = pathname.split('/')[1];
+    let stateArrayKey = `sw${appSection}`;
+    console.log(appSection)
+    return this.state[stateArrayKey][idx];
   }
 
   render() {
@@ -138,10 +122,13 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' render={() => <Home swpeople={this.state.swpeople} toggleModal={this.toggleModal} getFilmsByPerson={this.getFilmsByPerson} />} />
-          <Route path='/planets' render={() => <Planets swplanets={this.state.swplanets} toggleModal={this.toggleModal} getFilmsByPlanet={this.getFilmsByPlanet} /> } />
-          <Route path='/species' render={() => <Species swspecies={this.state.swspecies} getFilmsBySpecie={this.getFilmsBySpecie} /> } />
-          <Route path='/vehicles' render={() => <Vehicles swvehicles={this.state.swvehicles} getFilmsByVehicle={this.getFilmsByVehicle} /> } />
-          <Route exact path="/modal/:id" render={(props) => <Modal getPeople={this.getPeople} toggleModal={this.toggleModal} {...this.state} {...props}/>} />
+          <Route exact path='/planets' render={() => <Planets swplanets={this.state.swplanets} toggleModal={this.toggleModal} getFilmsByPlanet={this.getFilmsByPlanet} /> } />
+          <Route exact path='/species' render={() => <Species swspecies={this.state.swspecies} toggleModal={this.toggleModal} getFilmsBySpecie={this.getFilmsBySpecie} /> } />
+          <Route exact path='/vehicles' render={() => <Vehicles swvehicles={this.state.swvehicles} toggleModal={this.toggleModal} getFilmsByVehicle={this.getFilmsByVehicle} /> } />
+          <Route exact path="/people/:id" render={(props) => <Modal getDetail={this.getDetail} toggleModal={this.toggleModal} modalClass={this.state.modalClass} {...props}/>} />
+          <Route exact path="/planets/:id" render={(props) => <Modal getDetail={this.getDetail} toggleModal={this.toggleModal} modalClass={this.state.modalClass} {...props}/>} />
+          <Route exact path="/species/:id" render={(props) => <Modal getDetail={this.getDetail} toggleModal={this.toggleModal} modalClass={this.state.modalClass} {...props}/>} />
+          <Route exact path="/vehicles/:id" render={(props) => <Modal getDetail={this.getDetail} toggleModal={this.toggleModal} modalClass={this.state.modalClass} {...props}/>} />
         </Switch>
       </div>
     );

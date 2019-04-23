@@ -1,30 +1,55 @@
 import React, { Component } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+
+class Modal extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isModalActive: true,
+      modalClass: 'modal is-active',
+    }
+  }
 
 
-class PeopleDetail extends Component {
+  deleteModal = () => {
+    const { pathname } = this.props.history.location;
+    let appSection = pathname.split('/')[1];
+
+    this.setState({
+      isModalActive: !this.state.isModalActive,
+      modalClass: 'modal'
+    })  
+    
+    if (appSection === 'people') appSection = '';
+    this.props.history.push(`/${appSection}`);  
+  }
 
   render() {
-    console.log(this.props)
     const { params } = this.props.match;
-    const { location } = this.props.location;
-    const foundPeople = this.props.getPeople(params.id, location);
+    const { pathname } = this.props.history.location;
+    const foundDetail = this.props.getDetail(params.id, pathname);
+
+    const foundDetailBody = () => {
+      return Object.keys(foundDetail).map(key => {
+        if (key !== 'name') {
+          return <li key={key}>{key}: {foundDetail[key]}</li>
+        }
+      });
+    }
+
 
     return (
-      <div className={this.props.modalClass}>
+      <div className='modal is-active'>
         <div className="modal-background"></div>
         <div className="modal-card">
           <header className="modal-card-head">
-            <p className="modal-card-title">{foundPeople.name}</p>
-            <button className="delete" aria-label="close" onClick={this.props.toggleModal}></button>
+            <p className="modal-card-title">{foundDetail.name}</p>
+            <button className="delete" aria-label="close" onClick={this.deleteModal}></button>
           </header>
           <section className="modal-card-body">
             <ul>
-              <li>height: {foundPeople.height}</li>
-              <li>mass: {foundPeople.mass}</li>
-              <li>hair color: {foundPeople.hair_color}</li>
-              <li>skin color: {foundPeople.skin_color}</li>
-              <li>eye color: {foundPeople.eye_color}</li>
-              <li>gender: {foundPeople.gender}</li>
+              {foundDetailBody()}
             </ul>
           </section>
         </div>
@@ -33,4 +58,5 @@ class PeopleDetail extends Component {
   }
 }
 
-export default PeopleDetail;
+// export default withRouter(Modal);
+export default Modal;

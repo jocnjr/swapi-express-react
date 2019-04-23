@@ -14,7 +14,7 @@ const Planets = ({ swplanets, getFilmsByPlanet, toggleModal }) => {
                   <div className="card">
                     <header className="card-header">
                       <p className="card-header-title">
-                      <Link onClick={toggleModal} to={`/modal/${idx}`}>{planet.name}</Link>
+                        <Link onClick={toggleModal} to={`/planets/${idx}`}>{planet.name}</Link>
                       </p>
                     </header>
                     <div className="card-content">

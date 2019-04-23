@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Species = ({ swspecies, getFilmsBySpecie }) => {
+const Species = ({ swspecies, getFilmsBySpecie, toggleModal }) => {
   return (
     <section className='section'>
       <div className='container'>
@@ -13,7 +14,7 @@ const Species = ({ swspecies, getFilmsBySpecie }) => {
                   <div className="card">
                     <header className="card-header">
                       <p className="card-header-title">
-                        {specie.name}
+                      <Link onClick={toggleModal} to={`/species/${idx}`}>{specie.name}</Link>
                       </p>
                     </header>
                     <div className="card-content">
