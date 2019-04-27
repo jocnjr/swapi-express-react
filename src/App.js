@@ -22,7 +22,7 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     axios.get('http://localhost:8000/')
     .then(response => {
       // console.log(response.data.results);

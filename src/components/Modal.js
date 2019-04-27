@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+// import { Redirect, withRouter } from 'react-router-dom';
 
 class Modal extends Component {
   constructor(props) {
@@ -31,11 +31,20 @@ class Modal extends Component {
     const foundDetail = this.props.getDetail(params.id, pathname);
 
     const foundDetailBody = () => {
+      
       return Object.keys(foundDetail).map(key => {
-        if (key !== 'name') {
-          return <li key={key}>{key}: {foundDetail[key]}</li>
+        const liElement = <li key={key}>{key}: {foundDetail[key]}</li>;
+        const liElementWithLink = <li key={key}>{key}: <a href={foundDetail[key]}>{foundDetail[key]}</a></li>;
+
+        if (key !== 'name' && typeof foundDetail[key] !== 'object') {
+          if (foundDetail[key].match('http') !== null) {
+            return liElementWithLink;
+          } else {
+            return liElement;
+          }
         }
       });
+
     }
 
 
@@ -59,4 +68,5 @@ class Modal extends Component {
 }
 
 // export default withRouter(Modal);
+
 export default Modal;
